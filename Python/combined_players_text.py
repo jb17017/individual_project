@@ -7,7 +7,7 @@ import re
 #REDUCE AMOUNT OF DATA THAT COMES INTO DF - chunk data
 #REDUCE HTTP REQUESTS - add a delay - 600 requests per minute limit
 
-df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\dota2_english_classified.csv')
+df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\dota2_training_set.csv')
 #df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\test_classify.csv')
 
 array = df.to_numpy()
@@ -117,5 +117,5 @@ back_to_np = np.array(final_array)
 print("-----exporting to a csv file-----")
 export = pd.DataFrame(data = back_to_np,columns=["lmatch","player_num","gmatch","text","OFF"])
 #print(export)
-export.to_csv('dota2_english_combined_classified.csv',index = False)
+export.to_csv('dota2_training_combined_messages_set.csv',index = False)
 #export.to_csv('test_combined.csv',index = False)
