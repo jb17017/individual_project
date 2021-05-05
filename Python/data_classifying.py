@@ -3,7 +3,7 @@ import numpy as np
 import random
 import re
 
-df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\dota2_english_chat_messages.csv')
+df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\dota_2_english_chat_messages.csv')
 #df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\test.csv')
 
 all_data = df.to_numpy()

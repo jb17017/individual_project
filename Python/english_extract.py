@@ -1,4 +1,4 @@
-from langdetect import detect
+    from langdetect import detect
 from textblob import TextBlob
 import pandas as pd
 import numpy as np
@@ -123,5 +123,5 @@ back_to_np = np.array(final_list)
 print("-----exporting to a csv file-----")
 export = pd.DataFrame(data = back_to_np,columns=["match","time","player_num","text"])
 #print(export)
-export.to_csv('dota2_english_chat_messages.csv',index = False)
+export.to_csv('dota_2_english_chat_messages.csv',index = False)
 #export.to_csv('test_complete.csv',index = False)

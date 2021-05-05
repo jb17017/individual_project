@@ -1,4 +1,4 @@
-from langdetect import detect
+    from langdetect import detect
 from textblob import TextBlob
 from googletrans import Translator
 import pandas as pd
