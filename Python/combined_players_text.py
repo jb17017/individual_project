@@ -7,8 +7,9 @@ import re
 #REDUCE AMOUNT OF DATA THAT COMES INTO DF - chunk data
 #REDUCE HTTP REQUESTS - add a delay - 600 requests per minute limit
 
-df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\dota2_training_set.csv')
-#df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\test_classify.csv')
+#df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\dota2_training_set.csv')
+#df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\test sets\test_classify.csv')
+df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\individual_project\Datasets\dota2_training_set.csv')
 
 array = df.to_numpy()
 
@@ -26,17 +27,18 @@ new_label = []
 
 #Initialise
 j = array[0][1]
+m = array[0][0]
 #Collects each match conversation and stores it as one string
 #for i in range(0,limit):
 for i in range(0,len(array)):
-    if (array[i][1] == j):
+    if (array[i][1] == j and array[i][0] == m):
 
         if (i == 0):
             temp_condensed = [array[i][0],array[i][1],array[i][2]]
         temp_player_text.append(array[i][3])
         temp_label.append(array[i][4])
     #Add to a complete array, reset temp_match_conv and add current, reset j
-    if (array[i][1] != j):
+    if (array[i][1] != j or array[i][0] != m):
 
         condensed.append(temp_condensed)
         player_text.append((" ".join(temp_player_text)))
@@ -44,7 +46,7 @@ for i in range(0,len(array)):
         if (len(temp_label) == 1):
             new_label.append(temp_label[0])
         else:
-            found_off = False
+            # found_off = False
             # if any(l == "OFF" for l in temp_label):
             #     new_label.append("OFF")
             for k in range(0,len(temp_label)):
@@ -71,6 +73,7 @@ for i in range(0,len(array)):
         temp_player_text.append(array[i][3])
         temp_label.append(array[i][4])
         j = array[i][1]
+        m = array[i][0]
 
 #print(temp_match_conv)
 condensed.append(temp_condensed)
@@ -79,7 +82,7 @@ player_text.append((" ".join(temp_player_text)))
 if (len(temp_label) == 1):
     new_label.append(temp_label[0])
 else:
-    found_off = False
+    # found_off = False
     # if any(l == "OFF" for l in temp_label):
     #     new_label.append("OFF")
     for k in range(0,len(temp_label)):
@@ -117,5 +120,5 @@ back_to_np = np.array(final_array)
 print("-----exporting to a csv file-----")
 export = pd.DataFrame(data = back_to_np,columns=["lmatch","player_num","gmatch","text","OFF"])
 #print(export)
-export.to_csv('dota2_training_combined_messages_set.csv',index = False)
-#export.to_csv('test_combined.csv',index = False)
+export.to_csv(r'C:\Users\bitst\Documents\Individual project\individual_project\Datasets\dota2_training_combined_messages_set.csv',index = False)
+#export.to_csv(r'C:\Users\bitst\Documents\Individual project\individual_project\Datasets\test_combined.csv',index = False)
