@@ -3,8 +3,13 @@ import numpy as np
 import random
 import re
 
-df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\dota_2_english_chat_messages.csv')
-#df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\test.csv')
+#####################
+# WILL NOT RUN JUST PROOF I USED THE PROGRAM
+# WILL NOT RUN BECAUSE OF SPECIFIC NAMES FOR READING IN DATA SETS
+# WERE SPECIFIC TO MY MACHINE
+#####################
+
+df = pd.read_csv('dota2_english_chat_messages.csv')
 
 all_data = df.to_numpy()
 
@@ -37,17 +42,13 @@ for i in range(0,len(all_data)):
         player_num_temp.append(all_data[i][2])
         j = all_data[i][0]
 
-#print(temp_match_conv)
 match_conv.append(temp_match_conv)
 player_num.append(player_num_temp)
 
-#print(match_conv[0][0])
 
 count = 0
 
 LIMIT = 500
-#LIMIT = 1000
-#LIMIT = 5
 
 off_array_temp = []
 
@@ -63,6 +64,9 @@ random_index_list.append(match_index)
 
 while count < LIMIT:
 
+    # Loops through matches and chooses a random match to be classified,
+    # Label is accepted and move to next message in match until all in match labelled
+    # Then new random number and old match indexes added to an array so dont choose the same
     for text_index in range(0,len(match_conv[match_index])):
         off_array_temp.append(count+1)
         off_array_temp.append(player_num[match_index][text_index])
@@ -95,12 +99,10 @@ while count < LIMIT:
     count = count + 1
     print(count)
 
-#print(off_array)
 
 back_to_np = np.array(off_array)
 
 print("-----exporting to a csv file-----")
 export = pd.DataFrame(data = back_to_np,columns=["lmatch","player num","gmatch","text","OFF"])
-# #print(export)
-#export.to_csv('test_outcome.csv',index = False)
+
 export.to_csv('dota2_classified_dataset.csv',index = False)

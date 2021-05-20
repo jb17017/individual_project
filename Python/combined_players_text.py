@@ -1,15 +1,14 @@
 import pandas as pd
 import numpy as np
-import time
 import re
 
-#---------TO DO-----------
-#REDUCE AMOUNT OF DATA THAT COMES INTO DF - chunk data
-#REDUCE HTTP REQUESTS - add a delay - 600 requests per minute limit
+#####################
+# WILL NOT RUN JUST PROOF I USED THE PROGRAM
+# WILL NOT RUN BECAUSE OF SPECIFIC NAMES FOR READING IN DATA SETS
+# WERE SPECIFIC TO MY MACHINE
+#####################
 
-#df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\dota2_training_set.csv')
-#df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\test sets\test_classify.csv')
-df = pd.read_csv(r'C:\Users\bitst\Documents\Individual project\individual_project\Datasets\dota2_training_set.csv')
+df = pd.read_csv('dota2_training_set.csv')
 
 array = df.to_numpy()
 
@@ -28,27 +27,31 @@ new_label = []
 #Initialise
 j = array[0][1]
 m = array[0][0]
-#Collects each match conversation and stores it as one string
-#for i in range(0,limit):
+
+#Loops through each message
 for i in range(0,len(array)):
+    # If player number and match index the same
     if (array[i][1] == j and array[i][0] == m):
 
+        #For first value
         if (i == 0):
             temp_condensed = [array[i][0],array[i][1],array[i][2]]
+        #Add to temporary message list
         temp_player_text.append(array[i][3])
         temp_label.append(array[i][4])
-    #Add to a complete array, reset temp_match_conv and add current, reset j
+
+    # If there is a change in player num or match index from previous save
     if (array[i][1] != j or array[i][0] != m):
 
+        #Combine player messages
         condensed.append(temp_condensed)
         player_text.append((" ".join(temp_player_text)))
 
+        # If only 1 label and sentence give this label
         if (len(temp_label) == 1):
             new_label.append(temp_label[0])
         else:
-            # found_off = False
-            # if any(l == "OFF" for l in temp_label):
-            #     new_label.append("OFF")
+            # Loop through all temp labels looking for OFF label, if one then output new label as OFF
             for k in range(0,len(temp_label)):
                 print(temp_label[k])
                 label_check = bool(re.search('OFF', temp_label[k]))
@@ -56,6 +59,7 @@ for i in range(0,len(array)):
                     break
             if (label_check == True):
                 new_label.append("OFF")
+            # Otherwise all NOT and therefore re-annotate to decide label, if anything is changed
             else:
                 off_val = input("%s (1 or 0?): " %(" ".join(temp_player_text)))
                 while (off_val != "0" and off_val != "1"):
@@ -79,12 +83,11 @@ for i in range(0,len(array)):
 condensed.append(temp_condensed)
 player_text.append((" ".join(temp_player_text)))
 
+# Does it for last entry in data set
 if (len(temp_label) == 1):
     new_label.append(temp_label[0])
 else:
-    # found_off = False
-    # if any(l == "OFF" for l in temp_label):
-    #     new_label.append("OFF")
+
     for k in range(0,len(temp_label)):
         print(temp_label[k])
         label_check = bool(re.search('OFF', temp_label[k]))
@@ -102,16 +105,10 @@ else:
         elif(off_val == 1):
             new_label.append("OFF")
 
-#print(condensed)
-#print(player_text)
-#print(new_label)
-
-print(len(condensed))
-print(len(player_text))
-print(len(new_label))
-
 
 final_array = []
+
+# Combine all info back together
 for m in range(0,len(player_text)):
     final_array.append([condensed[m][0],condensed[m][1],condensed[m][2],player_text[m],new_label[m]])
 
@@ -119,6 +116,5 @@ back_to_np = np.array(final_array)
 
 print("-----exporting to a csv file-----")
 export = pd.DataFrame(data = back_to_np,columns=["lmatch","player_num","gmatch","text","OFF"])
-#print(export)
-export.to_csv(r'C:\Users\bitst\Documents\Individual project\individual_project\Datasets\dota2_training_combined_messages_set.csv',index = False)
-#export.to_csv(r'C:\Users\bitst\Documents\Individual project\individual_project\Datasets\test_combined.csv',index = False)
+
+export.to_csv('dota2_training_combined_messages_set.csv',index = False)
