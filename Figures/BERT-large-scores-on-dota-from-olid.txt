@@ -1,0 +1,5 @@
+MCC: 0.340
+precision binary score: 0.667
+recall binary score: 0.243
+F1 binary score: 0.356
+F1 macro score: 0.636
