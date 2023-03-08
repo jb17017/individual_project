@@ -1,4 +1,4 @@
-#This repo outlines a project with the mission of identifying toxicity in in-game video game text chat logs.
+### This repo outlines a project with the mission of identifying toxicity in in-game video game text chat logs.
 
 I used Google's BERT language model to achieve this.
 
